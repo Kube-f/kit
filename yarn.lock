@@ -1445,9 +1445,9 @@ kind-of@^4.0.0:
   dependencies:
     is-buffer "^1.1.5"
 
-kube-f@^0.1.0:
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/kube-f/-/kube-f-0.1.0.tgz#1355625d64fb4f56925a33371c16b0bce238bb58"
+kube-f@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/kube-f/-/kube-f-0.2.0.tgz#8cb248c2b4a5e1246df92b296dd0f7c2e9ce3e0d"
 
 latest-version@^3.0.0:
   version "3.1.0"

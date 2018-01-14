@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "bluebird": "^3.5.1",
-    "kube-f": "^0.1.0"
+    "kube-f": "^0.2.0"
   },
   "devDependencies": {
     "babel": "^6.23.0",
