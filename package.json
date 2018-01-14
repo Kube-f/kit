@@ -6,6 +6,9 @@
   "repository": "git@github.com:Kube-f/kit.git",
   "author": "fabulousduck <ryanvlaming@icloud.com>",
   "license": "MIT",
+  "scripts": {
+    "dev": "nodemon index.js | bunyan"
+  },
   "dependencies": {
     "bluebird": "^3.5.1",
     "kube-f": "^0.1.0"
@@ -16,6 +19,7 @@
     "babel-preset-stage-0": "^6.24.1",
     "babel-preset-stage-1": "^6.24.1",
     "babel-register": "^6.26.0",
+    "bunyan": "^1.8.12",
     "nodemon": "^1.14.7"
   }
 }
