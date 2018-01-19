@@ -7,6 +7,8 @@ const singletonKubeInstance = new Kube();
 
 export default function appInit() {
 
+    //load .env
+
     //load services
     fs.readdirPromise('./app')
         .filter(nonDirectories)
