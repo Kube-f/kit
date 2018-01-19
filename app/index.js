@@ -18,16 +18,12 @@ function mountBaseDirectory(directoryName) {
         .filter(nonDirectories)
         .map(function handleBaseDirectoryItem(directoryItem) {
             const mountableDirectoryItem = require(`./${directoryName}/${directoryItem}`).default;
-            singletonKubeInstance.mountModule(mountableDirectoryItem);
+            try {
+                singletonKubeInstance.mountModule(mountableDirectoryItem);
+            } catch(error) {
+                throw new Error('Illigal namespace function call outside of def scope')
+            }
         })
 }
 
 const nonDirectories = file => !file.includes('.')
-
-/*
-    Kube instance.
-    
-    load modules onto kube instance
-
-        map module files and mount accordingly
-*/

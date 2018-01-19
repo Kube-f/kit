@@ -5,5 +5,4 @@ export default function exampleService(kube) {
         console.log(a);
     })
 
-    otherNamespace.otherServiceFunction('meme')
 }
