@@ -1,4 +1,5 @@
 const Kube = require('kube-f');
+const KubeHttp = require('kube-http');
 const Promise = require('bluebird');
 
 const fs = Promise.promisifyAll(require('fs'), {suffix: 'Promise'});
@@ -7,7 +8,7 @@ const singletonKubeInstance = new Kube();
 
 export default function appInit() {
 
-    //load .env
+    //load kube-HTTP
 
     //load services
     fs.readdirPromise('./app')
