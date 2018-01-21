@@ -1,11 +1,9 @@
+import actions from './actions';
+
 export default function otherService(kube) {
-    const exampleNamespace = kube.namespace('exampleServiceNamespace');
     const otherServiceNamespace = kube.namespace('otherServiceNamespace');
 
+    kube.mountModule(actions);
     
-    exampleNamespace.exampleFunction('some call on another namespace');
-
-    otherServiceNamespace.def(function otherServiceFunction(a) {
-        console.log(`other service namespace ${a}`);
-    })
+    otherServiceNamespace.exampleFunction('someString');
 }
