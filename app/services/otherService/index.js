@@ -6,9 +6,10 @@ export default function otherService(kube, server) {
     kube.mountModule(actions);
     
     server.get('/v1/exampleEndpoint', function handleExampleRequest(req, res) {
-        console.log('dicks');
-        return otherServiceNamespace.exampleFunction('someString')
+        console.log('example endpoint');
+        otherServiceNamespace.exampleFunction('someString')
             .then(function handleExampleFunctionResult(result) {
+                console.log('result of example endpoint: ', result);
                 return res.send(result);
             })
     })
