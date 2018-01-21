@@ -1,8 +1,8 @@
 export default function otherServiceActions(kube) {
-    const otherServiceNamespace = kube.namespace('otherServiceNamespace');
+    const otherServiceNamespace = kube.namespace('exampleService');
 
     otherServiceNamespace.def(function exampleFunction(argument) {
-        console.log('service actions: ',argument);
+        kube.logger.trace({argument});
         return argument;
     })
 }
