@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "bluebird": "^3.5.1",
+    "bunyan-format": "^0.2.1",
     "dotenv": "^4.0.0",
     "kube-f": "^0.2.4",
     "restify": "^6.3.4"

@@ -2,7 +2,7 @@ const Kube = require('kube-f');
 const Promise = require('bluebird');
 const restify = require('restify');
 const bunyan = require('bunyan');
-
+const bformat = require('bunyan-format');
 const fs = Promise.promisifyAll(require('fs'), {suffix: 'Promise'});
 const kubeInstance = new Kube();
 
@@ -13,7 +13,8 @@ export default function appInit() {
     const server = restify.createServer();
 
     //setup bunyan logger
-    kubeInstance['logger'] = bunyan.createLogger({name: process.env.APP_NAME});
+    
+    kubeInstance['logger'] = bunyan.createLogger({name: process.env.APP_NAME, stream: bformat({outputMode: 'short'})});
 
     //load services
     fs.readdirPromise('./app')
