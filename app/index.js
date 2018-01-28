@@ -9,6 +9,8 @@ const kubeInstance = new Kube();
 
 export default function appInit() {
 
+    const logLevel = process.env.LEVEL == 'prod' ? 'prod' : 'debug' 
+
     //load restify
     const server = restify.createServer();
 
@@ -22,6 +24,9 @@ export default function appInit() {
         .then(server.listen(process.env.PORT, function handleListenSuccess () {
             kubeInstance.logger.info(`Listening on port ${process.env.PORT}`);
         }))
+        .catch(function handleInitError(err) {
+            kubeInstance.logger.error({err}, 'Mounting error');
+        })
 
 }
 
