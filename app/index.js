@@ -9,14 +9,20 @@ const kubeInstance = new Kube();
 
 export default function appInit() {
 
-    const logLevel = process.env.LEVEL == 'prod' ? 'prod' : 'debug' 
+    const logLevel = process.env.LEVEL == 'prod' ? 'info' : 'trace' 
 
     //load restify
     const server = restify.createServer();
 
     //setup bunyan logger
     
-    kubeInstance['logger'] = bunyan.createLogger({name: process.env.APP_NAME, stream: bformat({outputMode: 'short'})});
+    kubeInstance['logger'] = bunyan.createLogger({
+        name: process.env.APP_NAME, 
+        stream: bformat({
+            outputMode: 'short'
+        }),
+        level: logLevel
+    });
 
     //load services
     fs.readdirPromise('./app')
