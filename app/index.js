@@ -15,7 +15,6 @@ export default function appInit() {
     const server = restify.createServer();
 
     //setup bunyan logger
-    
     kubeInstance['logger'] = bunyan.createLogger({
         name: process.env.APP_NAME, 
         stream: bformat({
@@ -27,29 +26,31 @@ export default function appInit() {
     //load services
     fs.readdirPromise('./app')
         .filter(nonDirectories)
-        .map(dir => mountBaseDirectory(dir, server))
+        .map(dir => mountBaseDirectory(dir)(server))
         .then(server.listen(process.env.PORT, function handleListenSuccess () {
             kubeInstance.logger.info(`Listening on port ${process.env.PORT}`);
         }))
         .catch(function handleInitError(err) {
             kubeInstance.logger.error({err}, 'Mounting error');
         })
-
 }
 
-function mountBaseDirectory(directoryName, server) {
-    return fs.readdirPromise(`./app/${directoryName}`)
-        .filter(nonDirectories)
-        .map(function handleBaseDirectoryItem(directoryItem) {
-            kubeInstance.logger.info(`mounting ${directoryItem}`);
-            const mountableDirectoryItem = require(`./${directoryName}/${directoryItem}`).default;
-            try {
-                kubeInstance.mountModule(mountableDirectoryItem, server);
-                return
-            } catch(error) {
-                kubeInstance.logger.error('Illigal namespace function call outside of def scope')
-            }
-        });
+function mountBaseDirectory(directoryName) {
+    return function handleMountLevel(server) {
+      return fs.readdirPromise(`./app/${directoryName}`)
+          .filter(nonDirectories)
+          .map(function handleBaseDirectoryItem(directoryItem) {
+              kubeInstance.logger.info(`mounting ${directoryItem}`);
+              const mountableDirectoryItem = require(`./${directoryName}/${directoryItem}`).default;
+              try {
+                  kubeInstance.mountModule(mountableDirectoryItem, server);
+                  return
+              } catch(error) {
+                  kubeInstance.logger.error('Illigal namespace function call outside of def scope')
+              }
+          });
+    }
+
 }
 
 const nonDirectories = file => !file.includes('.')
