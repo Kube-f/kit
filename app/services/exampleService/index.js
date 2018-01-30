@@ -8,7 +8,7 @@ export default function otherService(kube, server) {
     server.get('/v1/exampleService', function handleExampleRequest(req, res) {
         otherServiceNamespace.exampleFunction('some example arg')
             .then(function handleExampleFunctionResult(result) {
-                kube.logger.info({result}, 'resilt from exampleFunction');
+                kube.logger.info({result}, 'result from exampleFunction');
                 return res.send(result);
             })
     })
