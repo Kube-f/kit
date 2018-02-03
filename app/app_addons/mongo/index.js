@@ -8,14 +8,25 @@ export default function mongoAddon(kube) {
   mongoNamespace.def(function setupConnection() {
     kube.logger.trace('setting up mongo connection');
     
-    const url = process.env.MONGO_URL;
+    const hostname = process.env.MONGO_URL;
+    const database = process.env.DB_NAME;
+    const user = process.env.DB_UNAME;
+    const password = process.env.DB_PASSWORD;
+    const connectionString = `mongodb://${user}:${password}@${hostname}/${database}?readPreference=secondary`
 
-    return mongoClient.connectPromise(url)
-      .then(function handleConnection(err, { db }) {
+    return mongoClient.connectPromise(connectionString)
+      .then(function handleConnection(client, err) {
         if(err) {
-          kube.logger.error({err}, 'Error while connecting to mongodb');
+          throw new Error(err);
         }
-        return db();
+        kube.logger.info({database}, 'New connection to mongodb open');
+        return client;
       })
+      .catch(function handleMongoConnectionError(err) {
+        console.log(err);
+        kube.logger.error({err}, 'Error while connecting to mongodb');
+      })
+    
   });
+
 }

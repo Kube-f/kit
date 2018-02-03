@@ -5,16 +5,16 @@ const loginRoute = 'login';
 
 export default function JWTMiddlewares(kube, server) {
     Promise.promisifyAll(jwt, { suffix: 'Promise' })
-    server.use(function jwtMiddleware(req, res, next) {
-        //check if this is sent to the login route
-        if(isLoginRoute(req)) {
-            kube.logger.trace('handling non JWT route');
-            next();
-        } else {
-            kube.logger.trace('handling jwt protected route')
-            verifyJWTToken(req, res);
-        }
-    })
+    // server.use(function jwtMiddleware(req, res, next) {
+    //     //check if this is sent to the login route
+    //     if(isLoginRoute(req)) {
+    //         kube.logger.trace('handling non JWT route');
+    //         next();
+    //     } else {
+    //         kube.logger.trace('handling jwt protected route')
+    //         verifyJWTToken(req, res);
+    //     }
+    // })
 }
 
 function isLoginRoute(req) {
@@ -22,7 +22,7 @@ function isLoginRoute(req) {
     return urlParams[urlParams.length-1].includes(loginRoute);
 }
 
-function verifyJWT(req, res) {
+function verifyJWTToken(req, res) {
     if(!req.header('authorization')) {
         res.send(403, 'No JWT token provided')
     }
