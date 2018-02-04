@@ -31,6 +31,7 @@ export default function appInit() {
             kubeInstance.logger.info(`Listening on port ${process.env.PORT}`);
         }))
         .catch(function handleInitError(err) {
+            console.log(err)
             kubeInstance.logger.error({err}, 'Mounting error');
         })
 }
