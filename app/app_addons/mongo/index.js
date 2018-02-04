@@ -23,7 +23,6 @@ export default function mongoAddon(kube) {
         return client;
       })
       .catch(function handleMongoConnectionError(err) {
-        console.log(err);
         kube.logger.error({err}, 'Error while connecting to mongodb');
       })
     

@@ -1,20 +1,21 @@
-import jwt, { verify } from 'jsonwebtoken';
+import jwt from 'jsonwebtoken';
 import Promise from 'bluebird';
+
+Promise.promisifyAll(jwt, { suffix: 'Promise' })
 
 const loginRoute = 'login';
 
 export default function JWTMiddlewares(kube, server) {
-    Promise.promisifyAll(jwt, { suffix: 'Promise' })
-    // server.use(function jwtMiddleware(req, res, next) {
-    //     //check if this is sent to the login route
-    //     if(isLoginRoute(req)) {
-    //         kube.logger.trace('handling non JWT route');
-    //         next();
-    //     } else {
-    //         kube.logger.trace('handling jwt protected route')
-    //         verifyJWTToken(req, res);
-    //     }
-    // })
+    server.use(function jwtMiddleware(req, res, next) {
+        //check if this is sent to the login route
+        if(isLoginRoute(req)) {
+            kube.logger.trace('handling non JWT route');
+            next();
+        } else {
+            kube.logger.trace('handling jwt protected route')
+            verifyJWTToken(kube, req, res);
+        }
+    })
 }
 
 function isLoginRoute(req) {
@@ -22,14 +23,17 @@ function isLoginRoute(req) {
     return urlParams[urlParams.length-1].includes(loginRoute);
 }
 
-function verifyJWTToken(req, res) {
+function verifyJWTToken(kube, req, res) {
     if(!req.header('authorization')) {
-        res.send(403, 'No JWT token provided')
+        const errorMessage = 'No JWT token provided';
+        kube.logger.error(errorMessage);
+        res.send(403, errorMessage);
+        return;
     }
 
     const token = req.header('authorization');
     const secret = process.env.JWT_SECRET;
-    return verifyPromise(token, secret)
+    return jwt.verifyPromise(token, secret)
         .then(function handleVerifyResult(data, err) {
             return err ? false : true;
         })
