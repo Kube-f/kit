@@ -1,6 +1,6 @@
 
 import Promise from 'bluebird';
-const mongoClient = Promise.promisifyAll(require('mongodb').MongoClient, {suffix: 'Promise'});
+const mongooseClient = Promise.promisifyAll(require('mongoose'), {suffix: 'Promise'});
 
 export default function mongoAddon(kube) {
   const mongoNamespace = kube.namespace('mongo');
@@ -14,7 +14,7 @@ export default function mongoAddon(kube) {
     const password = process.env.DB_PASSWORD;
     const connectionString = `mongodb://${user}:${password}@${hostname}/${database}?readPreference=secondary`
 
-    return mongoClient.connectPromise(connectionString)
+    return mongooseClient.connectPromise(connectionString)
       .then(function handleConnection(client, err) {
         if(err) {
           throw new Error(err);

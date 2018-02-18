@@ -17,6 +17,7 @@
     "jsonwebtoken": "^8.1.1",
     "kube-f": "^0.2.4",
     "mongodb": "^3.0.2",
+    "mongoose": "^5.0.6",
     "restify": "^6.3.4"
   },
   "devDependencies": {

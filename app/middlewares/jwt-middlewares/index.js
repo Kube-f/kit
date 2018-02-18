@@ -13,7 +13,7 @@ export default function JWTMiddlewares(kube, server) {
             next();
         } else {
             kube.logger.trace('handling jwt protected route')
-            verifyJWTToken(kube, req, res);
+            verifyJWTToken(kube, req, res, next);
         }
     })
 }
@@ -23,7 +23,7 @@ function isLoginRoute(req) {
     return urlParams[urlParams.length-1].includes(loginRoute);
 }
 
-function verifyJWTToken(kube, req, res) {
+function verifyJWTToken(kube, req, res, next) {
     if(!req.header('authorization')) {
         const errorMessage = 'No JWT token provided';
         kube.logger.error(errorMessage);
@@ -31,13 +31,14 @@ function verifyJWTToken(kube, req, res) {
         return;
     }
 
-    const token = req.header('authorization');
+    const token = req.header('authorization').split(' ')[1];
     const secret = process.env.JWT_SECRET;
+
     return jwt.verifyPromise(token, secret)
         .then(function handleVerifyResult(data, err) {
-            return err ? false : true;
+            next()
         })
         .catch(function handleJWTError(err) {
-            res.send(403, 'Error verifying jwt token');
+            res.send(403, {err, msg: 'Error verifying jwt token'});
         })
 }
