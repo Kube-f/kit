@@ -2549,6 +2549,10 @@ request@^2.83.0:
     tunnel-agent "^0.6.0"
     uuid "^3.1.0"
 
+require.async@^0.1.1:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/require.async/-/require.async-0.1.1.tgz#68db50c5b9cc731e1a01e5a248bbcb2fda0b7d4f"
+
 require_optional@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/require_optional/-/require_optional-1.0.1.tgz#4cf35a4247f64ca3df8c2ef208cc494b1ca8fc2e"

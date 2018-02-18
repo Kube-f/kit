@@ -6,7 +6,6 @@ const bformat = require('bunyan-format');
 const fs = Promise.promisifyAll(require('fs'), {suffix: 'Promise'});
 const kubeInstance = new Kube();
 
-
 export default function appInit() {
 
     const logLevel = process.env.LEVEL == 'prod' ? 'info' : 'trace' 
@@ -24,16 +23,17 @@ export default function appInit() {
     });
 
     //load services
-    fs.readdirPromise('./app')
+    return fs.readdirPromise('./app')
         .filter(nonDirectories)
         .map(dir => mountBaseDirectory(dir)(server))
         .then(server.listen(process.env.PORT, function handleListenSuccess () {
-            kubeInstance.logger.info(`Listening on port ${process.env.PORT}`);
+            kubeInstance.logger.info(`setting up on port ${process.env.PORT}`);
         }))
         .catch(function handleInitError(err) {
             console.log(err)
             kubeInstance.logger.error({err}, 'Mounting error');
         })
+
 }
 
 function mountBaseDirectory(directoryName) {
@@ -49,7 +49,7 @@ function mountBaseDirectory(directoryName) {
               } catch(error) {
                   kubeInstance.logger.error('Illigal namespace function call outside of def scope')
               }
-          });
+          })
     }
 
 }
