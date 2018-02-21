@@ -5,9 +5,8 @@ const mongooseClient = Promise.promisifyAll(require('mongoose'), {suffix: 'Promi
 
 export default function mongoAddon(kube) {
   const mongoNamespace = kube.namespace('mongo');
+  
   kube.loadModule(models);
-
-  console.log(kube);
 
   mongoNamespace.def(function setupConnection() {
     kube.logger.trace('setting up mongo connection');
