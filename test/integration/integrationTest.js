@@ -13,11 +13,11 @@ describe('intergration tests \n', function () {
       });
   })
   it('should be able to call an endpoint', function (done) {
-    // const url = `http://localhost:${process.env.PORT}`;
-    // request(url)
-    //   .then(function handleResponse(response) {
-    //     done();
-    //   })
-    done()
+    const url = `http://localhost:${process.env.PORT}/v1/login`;
+    request(url)
+      .then(function handleResponse(response) {
+        done();
+      })
+    done();
   });
 });

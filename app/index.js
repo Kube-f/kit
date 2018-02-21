@@ -47,6 +47,7 @@ function mountBaseDirectory(directoryName) {
                   kubeInstance.mountModule(mountableDirectoryItem, server);
                   return
               } catch(error) {
+                  console.log(error)
                   kubeInstance.logger.error('Illigal namespace function call outside of def scope')
               }
           })

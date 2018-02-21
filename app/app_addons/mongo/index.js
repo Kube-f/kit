@@ -1,9 +1,11 @@
 
 import Promise from 'bluebird';
+import models from './models'
 const mongooseClient = Promise.promisifyAll(require('mongoose'), {suffix: 'Promise'});
 
 export default function mongoAddon(kube) {
   const mongoNamespace = kube.namespace('mongo');
+  kube.loadModule(models);
 
   mongoNamespace.def(function setupConnection() {
     kube.logger.trace('setting up mongo connection');
