@@ -11,6 +11,9 @@ export default function otherService(kube, server) {
                 kube.logger.info({result}, 'result from exampleFunction');
                 return res.send(result);
             })
+            .catch(function handleExampleFunctionError(error) {
+                return res.send(500, 'failed to handle example request');
+            })
     })
 
 }

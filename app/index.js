@@ -36,6 +36,7 @@ export default function appInit() {
 
 }
 
+
 function mountBaseDirectory(directoryName) {
     return function handleMountLevel(server) {
       return fs.readdirPromise(`./app/${directoryName}`)

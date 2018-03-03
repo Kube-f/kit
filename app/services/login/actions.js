@@ -12,7 +12,6 @@ export default function loginServiceActions(kube) {
             MAKE YOUR OWN VERIFICATION !
         */
         if(username && password) {
-            console.log('sw : ', process.env.JWT_SECRET);
             return { token: jwt.sign({ user: username }, process.env.JWT_SECRET, {
                 expiresIn: '2h'
             })}

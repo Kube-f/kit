@@ -8,16 +8,17 @@ describe('intergration tests \n', function () {
     require('dotenv').config();
     require('../../app/index.js')
       .default()
-      .then(function handle() {
-        done();
-      });
+      .then(x => done());
   })
   it('should be able to call an endpoint', function (done) {
     const url = `http://localhost:${process.env.PORT}/v1/login`;
-    request(url)
-      .then(function handleResponse(response) {
-        done();
-      })
+    const doRequest = async () => { 
+      return await request(url)
+        .catch(function handleRequestError(error) {
+          throw new Error(error);
+        });
+    };
+    doRequest();
     done();
   });
 });
