@@ -15,7 +15,7 @@
     "bunyan-format": "^0.2.1",
     "dotenv": "^4.0.0",
     "jsonwebtoken": "^8.1.1",
-    "kube-f": "^0.2.7",
+    "kube-f": "^0.2.8",
     "mongodb": "^3.0.2",
     "mongoose": "^5.0.6",
     "restify": "^6.3.4"
