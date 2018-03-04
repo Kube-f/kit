@@ -1,5 +1,5 @@
-import ExampleModel from './ExampleModel';
+import exampleModel from './exampleModel';
 
 export default function modelBootstrapper(kube) {
-    kube.mountModule(ExampleModel);
+    kube.mountModule(exampleModel);
 }
