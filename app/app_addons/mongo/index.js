@@ -1,6 +1,7 @@
 
 import Promise from 'bluebird';
 import models from './models'
+import uuid from 'uuid/v4';
 const mongoose = require('mongoose');
 
 export default function mongoAddon(kube) {
@@ -15,6 +16,17 @@ export default function mongoAddon(kube) {
   const { MONGO_URL, DB_NAME, DB_UNAME, DB_PASSWORD } = process.env;
   const connectionString = `mongodb://${DB_UNAME}:${DB_PASSWORD}@${MONGO_URL}/${DB_NAME}?readPreference=secondary`
 
+  mongoNamespace.defSync(function model(name, data = {}) {
+    if(!name || name.length < 1 || name == '') {
+      return
+    }
+
+    const foundModel = kube.mongoose.model(name)
+    if(foundModel) {
+      return new foundModel(data);
+    }
+  })
+
   return kube.mongoose.connect(connectionString)
     .then(function handleConnection(client, err) {
       if(err) {
@@ -27,5 +39,4 @@ export default function mongoAddon(kube) {
       console.log(err)
       kube.logger.error({err}, 'Error while connecting to mongodb');
     })
-    
 }
