@@ -8,14 +8,16 @@ const kubeInstance = new Kube();
 
 export default function appInit() {
 
-    const logLevel = process.env.LEVEL == 'prod' ? 'info' : 'trace' 
+    const { APP_LEVEL, APP_NAME, APP_PORT } = process.env;
+
+    const logLevel = APP_LEVEL == 'prod' ? 'info' : 'trace' 
 
     //load restify
     const server = restify.createServer();
 
     //setup bunyan logger
     kubeInstance['logger'] = bunyan.createLogger({
-        name: process.env.APP_NAME, 
+        name: APP_NAME, 
         stream: bformat({
             outputMode: 'short'
         }),
@@ -26,8 +28,8 @@ export default function appInit() {
     return fs.readdirPromise('./app')
         .filter(nonDirectories)
         .map(dir => mountBaseDirectory(dir)(server))
-        .then(server.listen(process.env.PORT, function handleListenSuccess () {
-            kubeInstance.logger.info(`setting up on port ${process.env.PORT}`);
+        .then(server.listen(APP_PORT, function handleListenSuccess () {
+            kubeInstance.logger.info(`setting up on port ${APP_PORT}`);
         }))
         .catch(function handleInitError(err) {
             console.log(err)
@@ -55,5 +57,4 @@ function mountBaseDirectory(directoryName) {
     }
 
 }
-
 const nonDirectories = file => !file.includes('.')
