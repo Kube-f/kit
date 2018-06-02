@@ -1932,7 +1932,7 @@ kind-of@^6.0.0, kind-of@^6.0.2:
   version "6.0.2"
   resolved "https://registry.yarnpkg.com/kind-of/-/kind-of-6.0.2.tgz#01146b36a6218e64e58f3a8d66de5d7fc6f6d051"
 
-kube-f@^0.2.7:
+kube-f@^0.2.8:
   version "0.2.8"
   resolved "https://registry.yarnpkg.com/kube-f/-/kube-f-0.2.8.tgz#694e7bb27314a4c914fe266b23ca76293489d46e"
   dependencies:
