@@ -1,0 +1,10 @@
+{
+    "name": "example",
+    "type": "object",
+    "properties": {
+        "exampleRequiredParam": {
+            "type": "string"
+        }
+    },
+    "required": ["exampleRequiredParam"]
+}
