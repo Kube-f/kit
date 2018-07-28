@@ -1,0 +1,9 @@
+{
+    "method": "POST",
+    "uri": "",
+    "body": {
+    "email": "ryanvlamin@icloud.com",
+    "password": "mamryan"
+    },
+    "json": true
+}

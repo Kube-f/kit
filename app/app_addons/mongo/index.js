@@ -37,14 +37,6 @@ export default function mongoAddon(kube) {
     return foundModel ? foundModel : null;
   })
 
-  mongoNamespace.defSync(function baseModel(name) {
-    if(!name || name.length < 1 || name == '') {
-      return
-    }
-
-    const foundModel = kube.mongoose.model(name)
-    return foundModel ? foundModel : null;
-  })
 
   return kube.mongoose.connect(connectionString)
     .then(function handleConnection(client, err) {
